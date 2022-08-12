@@ -43,6 +43,21 @@ CNode *CList_CreateCNode(int val);
 bool CList_isEmpty(CList *cl);
 
 /**
+ * @brief Insere um nó na cabeça da lista.
+ * 
+ * @param cl Endereço da lista (&cl).
+ * @param val Valor.
+ */
+void CList_InsertInHead(CList *cl, int val);
+
+/**
+ * @brief Imprime os elementos da lista.
+ * 
+ * @param cl Endereço da lista (&cl).
+ */
+void CList_PrintCList(CList *cl);
+
+/**
  * @brief Desaloca Lista
  * 
  * @param cl Endereço da lista (&cl).
