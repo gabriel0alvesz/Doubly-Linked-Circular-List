@@ -51,11 +51,34 @@ bool CList_isEmpty(CList *cl);
 void CList_InsertInHead(CList *cl, int val);
 
 /**
- * @brief Imprime os elementos da lista.
+ * @brief Insere um nó no final da lista.
+ * 
+ * @param cl Endereço da lista (&cl).
+ * @param val Valor.
+ */
+void CList_InsertFinalList(CList *cl, int val);
+
+/**
+ * @brief Imprime os elementos da lista de forma ascendente.
  * 
  * @param cl Endereço da lista (&cl).
  */
 void CList_PrintCList(CList *cl);
+
+/**
+ * @brief Imprime os elementos da lista de forma descendente.
+ * 
+ * @param cl  Endereço da lista (&cl).
+ */
+void CList_PrintInvertCList(CList *cl);
+
+/**
+ * @brief Remove um nó da lista.
+ * 
+ * @param cl Endereço da lista (&cl).
+ * @param val Valor.
+ */
+void CList_RemoveCNode(CList *cl, int val);
 
 /**
  * @brief Desaloca Lista

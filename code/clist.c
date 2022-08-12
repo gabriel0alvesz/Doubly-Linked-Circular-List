@@ -42,7 +42,7 @@ void CList_InsertInHead(CList *cl, int val){
         cl->first->prox->ant = new; // O novo segundo nó tera seu ponteiro anterior apontando para o antigo nó
         cl->first->prox = new; // A cabeça agora aponta para o novo 1o nó
 
-        //Fatualizando ponteiros para lista circular
+        //atualizando ponteiros para lista circular
         new->ant = cl->last; // O novo primeiro elemento tem seu anterior, como o ultimo elemento da lista
         cl->last->prox = new; // o ponteiro de ultimo tera o seu prox apontando para o primeiro elemento da lista.
 
@@ -69,9 +69,63 @@ void CList_PrintCList(CList *cl){
     }else{
 
         puts("---> Lista Vazia!\n\n");
-        
+
     }
 
+    printf("last->prox = %d\nfirst->prox->ant = %d\n", cl->last->prox->val, cl->first->prox->ant->val);
+
+}
+
+void CList_PrintInvertCList(CList *cl){
+
+    if(!CList_isEmpty(cl)){
+        
+        CNode *p = cl->last;
+
+        do{
+
+            printf("%d ", p->val);
+            p = p->ant;
+
+        }while(p != cl->last);
+
+        printf("[%lu]\n", cl->size);
+    
+    }else{
+
+        puts("---> Lista Vazia!\n\n");
+
+    }
+}
+
+void CList_InsertFinalList(CList *cl, int val){
+
+    CNode *new = CList_CreateCNode(val);
+
+    if(CList_isEmpty(cl)){
+
+        cl->first->prox = new;
+        cl->last = new;
+
+    }else{
+        
+        //Inserçao normal
+        new->ant = cl->last; // o antigo ultimo elemento passa a ser o elemento anterior do novo nó
+        cl->last->prox = new; // O penultimo elemento agora tera seu ponteiro prox apontando para o ultimo nó
+        cl->last = new; // o ponteiro de ultimo agora aponta para o novo nó inserido
+        
+        //Atualizando ponteiros para lista circular.
+        cl->last->prox = cl->first->prox;
+        cl->first->prox->ant = cl->last;
+
+    }
+
+    cl->size++;
+}
+
+void CList_RemoveCNode(CList *cl, int val){
+
+    
 }
 
 void CList_DestroyList(CList *cl){
