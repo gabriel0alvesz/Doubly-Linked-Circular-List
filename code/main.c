@@ -14,9 +14,14 @@ int main(){
     CList_InsertFinalList(&l,6);
 
     CList_PrintCList(&l);
-    CList_PrintInvertCList(&l);
+    CList_RemoveCNode(&l,1);
+    CList_RemoveCNode(&l,4);
+    CList_RemoveCNode(&l,6);
 
-    //CList_DestroyList(&l);
+    CList_PrintInvertCList(&l);
+    CList_PrintCList(&l);
+
+    CList_DestroyList(&l);
 
     return 0;
 }

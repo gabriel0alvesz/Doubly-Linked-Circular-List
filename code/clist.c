@@ -72,7 +72,7 @@ void CList_PrintCList(CList *cl){
 
     }
 
-    printf("last->prox = %d\nfirst->prox->ant = %d\n", cl->last->prox->val, cl->first->prox->ant->val);
+    //printf("last->prox = %d\nfirst->prox->ant = %d\n", cl->last->prox->val, cl->first->prox->ant->val);
 
 }
 
@@ -125,31 +125,76 @@ void CList_InsertFinalList(CList *cl, int val){
 
 void CList_RemoveCNode(CList *cl, int val){
 
+    if(!CList_isEmpty(cl)){
+
+        CNode *p = cl->first->prox; //Primeiro elemento da lista.
+
+        // O elemento procurado é o primeiro da lista.
+        if(p->val == val){
+
+            //A lista possui apenas um unico elemento?
+            if(p == cl->last){
+
+                cl->first->prox = NULL;
+                cl->last = NULL;
+
+            }else{
+
+                cl->first->prox = p->prox;
+                cl->first->prox->ant = cl->last;
+                cl->last->prox = cl->first->prox;
+
+            }
+
+            free(p);
+            cl->size--;
+        
+        }else if(p->val != val){ // verificaçao necessaria apenas para ter um else no final no caso de a lista estiver vazia.
+            
+            p = p->prox; //Se o elemento nao esta no inicio, ja começa a partir do segundo elemento a verificaçao.
+
+            while(p != cl->first->prox){
+
+                if(p->val == val){
+                    
+                    if(p == cl->last){ //O elemento encontrado esta na ultima posição da lista.
+
+                        cl->last = p->ant;// O penultimo elemento agora será o ultimo
+                    
+                    }    
+                    
+                    //Atualiza ponteiros para continuar a lista circular
+                    p->ant->prox = p->prox; // O ultimo elemento aponta para o primeiro elemento da lista.
+                    p->prox->ant = p->ant; // O anterior do primeiro elemento aponta para o ultimo
+
+                    free(p);
+                    cl->size--;
+                    break;
+
+                }else{
+
+                    p = p->prox;
+                }
+            }
+
+        }
+    }
     
 }
 
 void CList_DestroyList(CList *cl){
-    
-    if(!CList_isEmpty(cl)){
-        
-        CNode *pos = cl->first->prox;
-        CNode *aux = NULL;
 
-        while(pos != NULL){
+    CNode *p = cl->first;
+    CNode *aux = NULL;
 
-            aux = pos;
-            pos = pos->prox;
-            free(aux);
-        }
+    while(p != cl->last){//Tambem poderia ser usado um
 
-        free(pos);
-        free(cl);
-
-        cl = NULL;
-        //Lista desalocada!
-    }else{
-
-        cl = NULL;
+        aux = p;
+        p = p->prox;
+        free(aux);
     }
-    
+
+    free(p);
+    cl = NULL;
+    // Lista Circular Duplamente Encadeada desalocada!
 }
